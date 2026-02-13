@@ -10,6 +10,7 @@
             --amarelo-forte: #FFFF00;
             --fundo-base: #1a1a1a;
             --preto-card: #000000;
+            --verde-whatsapp: #2dfc71; /* Verde mais vivo e chamativo */
         }
 
         body {
@@ -42,13 +43,8 @@
             padding: 2px 7px; border-radius: 50%; font-weight: bold;
         }
 
-        /* LOGO CENTRALIZADA */
         .logo-box { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 5px; 
+            flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; 
         }
         .logo-img { height: 60px; max-width: 150px; object-fit: contain; }
         .logo-text { font-size: 1.1rem; font-weight: 900; color: var(--amarelo-forte); text-transform: uppercase; letter-spacing: 1px; }
@@ -72,57 +68,61 @@
             cursor: pointer; text-transform: uppercase;
         }
 
-        /* GRID: UM POD POR LINHA (ESTILO LISTA) */
         .container { 
-            display: flex;
-            flex-direction: column;
-            gap: 15px; 
-            padding: 15px; 
-            max-width: 600px; 
-            margin: 0 auto;
+            display: flex; flex-direction: column; gap: 15px; padding: 15px; 
+            max-width: 600px; margin: 0 auto;
         }
 
         .card { 
-            background: var(--preto-card); 
-            border-radius: 12px; 
-            padding: 15px; 
-            display: flex; 
-            align-items: center;
-            gap: 15px;
-            color: #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            border: 1px solid #333;
-            width: 100%;
-            box-sizing: border-box;
+            background: var(--preto-card); border-radius: 12px; padding: 15px; 
+            display: flex; align-items: center; gap: 15px;
+            color: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            border: 1px solid #333; width: 100%; box-sizing: border-box;
         }
 
         .card-img-box { flex: 0 0 100px; }
-        .card img { 
-            width: 100px; 
-            height: 100px; 
-            object-fit: contain; 
-            background: #fff; 
-            border-radius: 8px; 
-        }
-        
-        .card-info {
-            flex: 1; 
-            text-align: left;
-        }
-
+        .card img { width: 100px; height: 100px; object-fit: contain; background: #fff; border-radius: 8px; }
+        .card-info { flex: 1; text-align: left; }
         .puffs { color: var(--amarelo-forte); font-weight: bold; font-size: 0.7rem; text-transform: uppercase; }
         .card h3 { font-size: 1rem; margin: 3px 0; }
         .price { font-size: 1.3rem; font-weight: 900; color: #20bf6b; margin: 3px 0; }
-        
         .flavor-select { width: 100%; padding: 8px; background: #fff; color: #000; border-radius: 6px; margin: 8px 0; font-weight: bold; font-size: 0.8rem; border:none; }
         .btn-add { width: 100%; padding: 10px; background: var(--amarelo-forte); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; }
 
+        /* --- FIX PROPORCIONAL DO CARRINHO --- */
         #cart-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 20px; box-sizing: border-box;
+            background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 15px; box-sizing: border-box;
         }
 
-        .modal-content { max-width: 500px; margin: 0 auto; background: #000; padding: 25px; border-radius: 15px; border: 2px solid var(--amarelo-forte); color: #fff; }
+        .modal-content { 
+            width: 100%; max-width: 450px; margin: 20px auto; background: #111; 
+            padding: 25px; border-radius: 15px; border: 2px solid var(--amarelo-forte); 
+            color: #fff; box-sizing: border-box; 
+        }
+
+        .item-no-carrinho {
+            background: #222; padding: 12px; margin-bottom: 10px; border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-left: 4px solid var(--amarelo-forte);
+        }
+
+        .modal-content h2 { margin-top: 0; margin-bottom: 20px; font-weight: 900; }
+
+        .modal-content input, .modal-content select {
+            width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px;
+            border: 1px solid #444; background: #000; color: #fff; box-sizing: border-box;
+        }
+
+        .btn-finalizar {
+            width: 100%; padding: 18px; background: var(--verde-whatsapp); color: #000; 
+            border: none; border-radius: 10px; font-weight: 900; cursor: pointer; 
+            font-size: 1rem; text-transform: uppercase;
+        }
+
+        .btn-voltar {
+            width: 100%; margin-top: 15px; background: none; color: #999; border: none; cursor: pointer; text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -146,10 +146,10 @@
 </header>
 
 <div class="shortcuts">
-    <button class="btn-shortcut" onclick="atalho('IGNITE')">🔥 IGNITE</button>
-    <button class="btn-shortcut" onclick="atalho('ELFBAR')">💨 ELFBAR</button>
-    <button class="btn-shortcut" onclick="atalho('LIFE POD')">🔋 LIFE POD</button>
-    <button class="btn-shortcut" onclick="atalho('SEX ADDICT')">🔞 SEX ADDICT</button>
+    <button class="btn-shortcut" onclick="atalho('IGNITE')">IGNITE</button>
+    <button class="btn-shortcut" onclick="atalho('ELFBAR')">ELFBAR</button>
+    <button class="btn-shortcut" onclick="atalho('LIFE POD')">LIFE POD</button>
+    <button class="btn-shortcut" onclick="atalho('SEX ADDICT')">SEX ADDICT</button>
     <button class="btn-shortcut" onclick="atalho('')">TODOS</button>
 </div>
 
@@ -159,14 +159,18 @@
     <div class="modal-content">
         <h2 style="color: var(--amarelo-forte); text-align:center;">MEU CARRINHO</h2>
         <div id="lista-carrinho"></div>
-        <div style="margin-top:20px;">
-            <input type="text" id="c-nome" placeholder="SEU NOME" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
-            <input type="text" id="c-end" placeholder="ENDEREÇO DE ENTREGA" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
-            <select id="c-pag" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
-                <option>Pix</option><option>Cartão</option><option>Dinheiro</option>
+        <div id="total-valor" style="text-align:right; font-size:1.2rem; font-weight:bold; color:var(--amarelo-forte); margin-bottom:20px;"></div>
+        
+        <div style="border-top: 1px solid #333; padding-top: 20px;">
+            <input type="text" id="c-nome" placeholder="SEU NOME COMPLETO">
+            <input type="text" id="c-end" placeholder="ENDEREÇO DE ENTREGA">
+            <select id="c-pag">
+                <option value="Pix">Pagamento: Pix</option>
+                <option value="Cartão">Pagamento: Cartão</option>
+                <option value="Dinheiro">Pagamento: Dinheiro</option>
             </select>
-            <button onclick="finalizar()" style="width:100%; padding:18px; background:#25d366; color:#fff; border:none; border-radius:10px; font-weight:bold;">PEDIR NO WHATSAPP</button>
-            <button onclick="fecharCarrinho()" style="width:100%; margin-top:10px; background:none; color:#999; border:none;">Voltar</button>
+            <button class="btn-finalizar" onclick="finalizar()">ENVIAR PEDIDO VIA WHATSAPP</button>
+            <button class="btn-voltar" onclick="fecharCarrinho()">Voltar ao catálogo</button>
         </div>
     </div>
 </div>
@@ -180,26 +184,26 @@
         { nome: "IGNITE V250", puffs: "25 MIL💨", preco: "129,90", img: "v250.jpg", sabores: ["Uva🍇 Gelada🧊", "Mentol💚", "Menta💚Ice🧊"] },
         { nome: "IGNITE V300", puffs: "30 MIL💨", preco: "139,90", img: "v300.jpg", sabores: ["🌵🍋 Cactus e Refri de Limão", "Bluberry💜Morango🍓Coco🥥", "Morango🍓Ice🧊", "💚🍈 Menta e Melão", "🍌🥥 Banana Água de Coco", "🍓🥝 Morango e Kiwi", "🍓🍌 Morango e Banana", "Mentol💚", "Banana🍌 Gelada🧊", "Menta💚 Gelada🧊", "Uva🍇 Gelada🧊", "Pitaya💖 com Melancia🍉", "Maçã🍏Verde", "Chiclete🍬Melancia🍉"] },
         { nome: "IGNITE V400", puffs: "40 MIL💨", preco: "149,90", img: "v400.jpg", sabores: ["Morango🍓 Banana🍌 Gelada🧊", "Cereja🍒Melancia🍉Ice🧊"] },
-        { nome: "IGNITE V400 MIX", puffs: "40 MIL💨", preco: "149,90", img: "v400mix.jpg", sabores: ["Chiclete🍬 de Uva🍇Pêssego🍑 Gelado🧊", "Morango🍓 Manga🥭/ Banana🍌 Gelada🧊", "Abacaxi🍍 Manga🥭/ Morango🍓 Gelado🧊", "Maracujá💛 Kiwi🥝/ Abacaxi🍍 Gelado🧊", "Melão🍈/ Mentol💚", "Banana🍌 Gelada🧊/ Morango🍓 Gelado🧊", "Maçã🍏 Gelada🧊/ Morango🍓 Melancia🍉", "Manga🥭 Gelada🧊/ Maracujá💛 Goiaba🍈", "Uva🍇 Gelada🧊/ Melancia🍉 Gelada🧊", "Pêssego🍑 Melancia🍉/ Manga🥭 Gelada🧊", "Melancia🍉 Uva🍇 Ice / Açaí💜 Ice", "Menta💚 Ice / Pêssego🍑 Uva🍇", "Uva🍇 Ice / Morango🍓", "Melancia🍉 Ice / Cereja🍒 Ice", "Laranja🍊 Ice / Morango🍓 Ice", "Bluberry💜 Ice / Amora🖤 Framboesa❤️", "Morango🍓 Melancia🍉 Ice / Uva🍇"] },
-        { nome: "IGNITE V400 SWEET", puffs: "40 MIL💨", preco: "149,90", img: "v400sweet.jpg", sabores: ["🍌🍒 Banana Cereja", "🍏 Maçã Verde", "🍑❤️❄️ Pêssego Framboesa Ice", "Bluberry💜Ice🧊", "Chiclete🍬Bluberry💙"] },
+        { nome: "IGNITE V400 MIX", puffs: "40 MIL💨", preco: "149,90", img: "v400mix.jpg", sabores: ["Chiclete🍬 de Uva🍇", "Pêssego🍑 Gelado🧊", "Morango🍓 Manga🥭", "Uva🍇 Gelada🧊", "Melancia🍉 Gelada🧊"] },
+        { nome: "IGNITE V400 SWEET", puffs: "40 MIL💨", preco: "149,90", img: "v400sweet.jpg", sabores: ["🍌🍒 Banana Cereja", "🍏 Maçã Verde", "🍑❤️❄️ Pêssego Framboesa Ice"] },
         { nome: "P100 KIT", puffs: "10 MIL💨", preco: "119,90", img: "p100kit.jpg", sabores: ["Blueberry💜Ice🧊", "🍏 Maçã Verde"] },
         { nome: "P100 REFIL", puffs: "10 MIL💨", preco: "99,90", img: "p100refil.jpg", sabores: ["Maçã Verde🍏", "Blueberry💜Ice🧊"] },
-        { nome: "ELF BAR ULTRA SLIM", puffs: "18 MIL💨", preco: "99,90", img: "ultraslim.jpg", sabores: ["Morango🍓 Melancia🍉", "Bluberry💜 Gelado❄️", "Chiclete de Ment💚", "Manga🥭 Ice❄️", "Melancia🍉 Menta💚", "Uva🍇 Framboesa❤️", "Duas Maçãs🍎🍏"] },
-        { nome: "ELFBAR EW KIT 9K", puffs: "9 MIL💨", preco: "99,90", img: "ewkit.jpg", sabores: ["🍉 Melancia", "🍒🍓 Cereja Morango", "🍒 Cereja", "🥭🍑❄️ Manga Pêssego Ice"] },
+        { nome: "ELF BAR ULTRA SLIM", puffs: "18 MIL💨", preco: "99,90", img: "ultraslim.jpg", sabores: ["Morango🍓 Melancia🍉", "Bluberry💜 Gelado❄️", "Manga🥭 Ice❄️"] },
+        { nome: "ELFBAR EW KIT 9K", puffs: "9 MIL💨", preco: "99,90", img: "ewkit.jpg", sabores: ["🍉 Melancia", "🍒🍓 Cereja Morango", "🥭🍑❄️ Manga Pêssego Ice"] },
         { nome: "REFIL EW 9K", puffs: "9 MIL💨", preco: "79,90", img: "ewrefil9k.jpg", sabores: ["💜🍓❄️ Bluberry Morango Ice", "🍒🍓 Cereja Morango"] },
         { nome: "REFIL EW 16K", puffs: "16 MIL💨", preco: "99,90", img: "ewrefil16k.jpg", sabores: ["🍇💜 Amora Bluberry", "Maçã🍏Verde💚Gelada🧊"] },
-        { nome: "ELFBAR 23K", puffs: "23 MIL💨", preco: "109,90", img: "elf23k.jpg", sabores: ["Bluberry💜Morango🍓Ice🧊", "Menta💚Ice🧊", "Bluberry💜Frutas Tropicais🍍🥭🥝", "Pêra🍐Bluberry💙", "Uva🍇"] },
-        { nome: "ELFBAR 30K", puffs: "30 MIL💨", preco: "114,90", img: "elf30k.jpg", sabores: ["Menta💚 Melancia🍉 Melão🍈", "Açaí🫐 Banana🍌 Ice❄️", "Café☕ Ice❄️", "Coco🥥 Morango🍓 Ice❄️", "Banana🍌Coco🥥", "Uva🍇Limonada🍋Ice🧊", "Melancia🍉Limonada🍋Ice🧊"] },
-        { nome: "ELFBAR 40K", puffs: "40 MIL💨", preco: "129,90", img: "elf40k.jpg", sabores: ["Bluberry💜Morango🍓Ice🧊", "Frutas Tropicais🍍🥭🥝", "Bluberry💜 Frutas Tropicais🍍🥭🥝", "Manga🥭Ice🧊"] },
-        { nome: "ICE KING SUMMER", puffs: "40 MIL💨", preco: "129,90", img: "summer.jpg", sabores: ["Coca Cola🥤 Refrescante❄️", "Pêssego🍑 Bluberry💜 Refrescante❄️", "Amora🫐 Refrescante❄️", "Cereja Tripla🍒", "Maçã Verde🍏 Refrescante❄️"] },
-        { nome: "ELFBAR TRIO 40K", puffs: "40 MIL💨", preco: "129,90", img: "trio.jpg", sabores: ["Abacaxi🍍Laranja🍊Ice🧊", "Maçã🍏Verde Ice🧊", "Bluberry💜 Ice🧊", "Pêssego🍑"] },
-        { nome: "LIFE POD 10K", puffs: "10 MIL💨", preco: "129,90", img: "life10k.jpg", sabores: ["Menthol💚", "Menta💚Ice🧊", "Maracujá💛Ice🧊", "Miami Mint💚", "Amora🖤 Ice🧊", "Menta Suave💚", "Café☕ com Chocolate🍫", "Pitaya❤️Bluberry💜Morango🍓", "Uva🍇Mel🍯", "Água de Coco🥥", "Pitaya❤️Ice🧊", "Chiclete🍬Melancia🍉", "Pêssego🍑Framboesa🍓", "Kiwi🥝Framboesa❤️", "Chiclete🍬Menta💚", "Chiclete🍬Bluberry💜", "Banana🍌Ice🧊", "Bluberry💜Maracujá💛Menta💚", "Bluberry💜Menta💚", "Morango🍓Melancia🍉", "Melancia🍉Pêssego🍑Ice🧊"] },
-        { nome: "REFIL LIFE POD 10K", puffs: "10 MIL💨", preco: "99,90", img: "liferefil.jpg", sabores: ["Menthol💚", "Menta💚Ice🧊", "Miami Mint💚", "Amora🖤 Ice🧊", "Maracujá💛Ice🧊", "Menta Suave💚", "Café☕ com Chocolate🍫", "Pitaya❤️Bluberry💜Morango🍓", "Uva🍇Mel🍯", "Água de Coco🥥", "Pitaya❤️Ice🧊", "Chiclete🍬Melancia🍉", "Pêssego🍑Framboesa🍓", "Kiwi🥝Framboesa❤️", "Chiclete🍬Menta💚", "Chiclete🍬Bluberry💜", "Banana🍌Ice🧊", "Bluberry💜Maracujá💛Menta💚", "Bluberry💜Menta💚", "Melancia🍉Pêssego🍑Ice🧊"] },
-        { nome: "LIFE POD SK", puffs: "10 MIL💨", preco: "119,90", img: "lifesk.jpg", sabores: ["Bluberry💜Limão🍋‍🟩Ice🧊", "Morango🍓 Kiwi🥝Ice🧊", "Maçã Verde🍏 Ice🧊", "Manga🥭 Ice🧊", "Bluberry Limão Ice", "Sorvete🍨 de Morango🍓", "Menta💚Ice🧊", "Morango🍓 Ice🧊", "Energético⚡Monster", "Cereja🍒Limonada🍋", "Morango🍓Melancia🍉Ice🧊"] },
-        { nome: "SEX ADDICT 28K", puffs: "28 MIL💨", preco: "119,90", img: "sexaddict.jpg", sabores: ["Menta💚Ice🧊", "Melancia🍉Ice🧊", "Uva🍇Kiwi🥝Ice🧊", "Morango🍓Melancia🍉Ice🧊", "Morango🍓Banana🍌Ice🧊", "Melancia🍉Uva🍇Ice🧊", "Uva🍇Açaí💜Ice🧊", "Menthol💚", "Morango🍓Ice🧊"] },
-        { nome: "IGNITE V55 ULTRA SLIM", puffs: "5.5 MIL💨", preco: "89,90", img: "v55.jpg", sabores: ["Menta💚Ice🧊", "Uva🍇Verde💚", "Morango🍓Melancia🍉", "Melancia🍉Ice🧊", "Uva🍇Ice🧊", "Morango🍓Kiwi🥝", "Morango🍓Banana🍌", "Uva🍇Maçã🍎Açaí🫐", "Menta💚Doce🍬"] },
-        { nome: "VAPE SOUL 20K ULTRA", puffs: "20 MIL💨", preco: "79,90", img: "vapesoul.jpg", sabores: ["Menta💚 Melancia🍉", "Uva🍇 Framboesa❤️ Limão🍋", "Manga🥭 Ice❄️", "Framboesa❤️ Uva🍇", "Menta💚 Ice❄️", "Maracujá💛 Uva🍇"] },
-        { nome: "NIK BAR 10K", puffs: "10 MIL💨", preco: "79,90", img: "nikbar.jpg", sabores: ["💚❄️ Menthol", "🍇❄️ Uva Ice", "🍉❄️ Melancia Ice", "🍏❄️ Maçã Verde Ice", "💜❄️ Bluberry e Framboesa❤️ Ice"] }
+        { nome: "ELFBAR 23K", puffs: "23 MIL💨", preco: "109,90", img: "elf23k.jpg", sabores: ["Bluberry💜Morango🍓Ice🧊", "Menta💚Ice🧊", "Uva🍇"] },
+        { nome: "ELFBAR 30K", puffs: "30 MIL💨", preco: "114,90", img: "elf30k.jpg", sabores: ["Menta💚 Melancia🍉", "Açaí🫐 Banana🍌 Ice❄️", "Banana🍌Coco🥥"] },
+        { nome: "ELFBAR 40K", puffs: "40 MIL💨", preco: "129,90", img: "elf40k.jpg", sabores: ["Bluberry💜Morango🍓Ice🧊", "Frutas Tropicais🍍🥭🥝", "Manga🥭Ice🧊"] },
+        { nome: "ICE KING SUMMER", puffs: "40 MIL💨", preco: "129,90", img: "summer.jpg", sabores: ["Coca Cola🥤 Refrescante❄️", "Pêssego🍑 Bluberry💜 Refrescante❄️", "Maçã Verde🍏 Refrescante❄️"] },
+        { nome: "ELFBAR TRIO 40K", puffs: "40 MIL💨", preco: "129,90", img: "trio.jpg", sabores: ["Abacaxi🍍Laranja🍊Ice🧊", "Maçã🍏Verde Ice🧊", "Bluberry💜 Ice🧊"] },
+        { nome: "LIFE POD 10K", puffs: "10 MIL💨", preco: "129,90", img: "life10k.jpg", sabores: ["Menthol💚", "Menta💚Ice🧊", "Miami Mint💚", "Água de Coco🥥", "Chiclete🍬Melancia🍉"] },
+        { nome: "REFIL LIFE POD 10K", puffs: "10 MIL💨", preco: "99,90", img: "liferefil.jpg", sabores: ["Menthol💚", "Menta💚Ice🧊", "Miami Mint💚", "Água de Coco🥥"] },
+        { nome: "LIFE POD SK", puffs: "10 MIL💨", preco: "119,90", img: "lifesk.jpg", sabores: ["Bluberry💜Limão🍋‍🟩Ice🧊", "Morango🍓 Kiwi🥝Ice🧊", "Maçã Verde🍏 Ice🧊"] },
+        { nome: "SEX ADDICT 28K", puffs: "28 MIL💨", preco: "119,90", img: "sexaddict.jpg", sabores: ["Menta💚Ice🧊", "Melancia🍉Ice🧊", "Uva🍇Kiwi🥝Ice🧊", "Uva🍇Açaí💜Ice🧊"] },
+        { nome: "IGNITE V55 ULTRA SLIM", puffs: "5.5 MIL💨", preco: "89,90", img: "v55.jpg", sabores: ["Menta💚Ice🧊", "Uva🍇Verde💚", "Morango🍓Melancia🍉"] },
+        { nome: "VAPE SOUL 20K ULTRA", puffs: "20 MIL💨", preco: "79,90", img: "vapesoul.jpg", sabores: ["Menta💚 Melancia🍉", "Uva🍇 Framboesa❤️ Limão🍋"] },
+        { nome: "NIK BAR 10K", puffs: "10 MIL💨", preco: "79,90", img: "nikbar.jpg", sabores: ["💚❄️ Menthol", "🍇❄️ Uva Ice", "🍉❄️ Melancia Ice"] }
     ];
 
     let carrinho = [];
@@ -235,7 +239,7 @@
         if(!s) return alert("Escolha o sabor primeiro!");
         carrinho.push({ nome: p.nome, sabor: s, preco: p.preco });
         document.getElementById('cart-count').innerText = carrinho.length;
-        alert("✅ Adicionado!");
+        alert("✅ " + p.nome + " adicionado!");
     }
 
     function abrirCarrinho() {
@@ -245,12 +249,13 @@
         let total = 0;
         carrinho.forEach((item, i) => {
             total += parseFloat(item.preco.replace(',', '.'));
-            div.innerHTML += `<div style="background:#222; padding:10px; margin-bottom:5px; border-radius:5px; display:flex; justify-content:space-between; font-size:0.8rem;">
-                <span>${item.nome} (${item.sabor})</span>
-                <span onclick="remover(${i})" style="color:red; cursor:pointer;">X</span>
-            </div>`;
+            div.innerHTML += `
+                <div class="item-no-carrinho">
+                    <span style="font-size: 0.9rem;">${item.nome} (${item.sabor})</span>
+                    <span onclick="remover(${i})" style="color:#ff4d4d; cursor:pointer; font-weight:bold; padding: 5px;">X</span>
+                </div>`;
         });
-        div.innerHTML += `<h3 style="text-align:right; color:var(--amarelo-forte); margin-top:10px;">TOTAL: R$ ${total.toFixed(2).replace('.', ',')}</h3>`;
+        document.getElementById('total-valor').innerText = "TOTAL: R$ " + total.toFixed(2).replace('.', ',');
         document.getElementById('cart-modal').style.display = 'block';
     }
 
@@ -260,8 +265,9 @@
     function finalizar() {
         const n = document.getElementById('c-nome').value;
         const e = document.getElementById('c-end').value;
+        const p = document.getElementById('c-pag').value;
         if(!n || !e) return alert("Preencha Nome e Endereço!");
-        let m = `*PEDIDO DH MULTIPRODUTOS*\n\nCliente: ${n}\nEndereço: ${e}\n\nITENS:\n`;
+        let m = `*PEDIDO DH MULTIPRODUTOS*\n\n👤 *Cliente:* ${n}\n📍 *Endereço:* ${e}\n💳 *Pagamento:* ${p}\n\n*ITENS:*\n`;
         carrinho.forEach(i => m += `- ${i.nome} (${i.sabor})\n`);
         window.open("https://wa.me/5538999845134?text=" + encodeURIComponent(m));
     }
