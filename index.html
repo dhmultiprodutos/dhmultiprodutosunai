@@ -8,7 +8,7 @@
     <style>
         :root {
             --amarelo-forte: #FFFF00;
-            --fundo-base: #1a1a1a; /* Cinza Grafite Escuro */
+            --fundo-base: #1a1a1a;
             --preto-card: #000000;
         }
 
@@ -33,17 +33,25 @@
 
         .cart-header {
             font-size: 1.8rem; color: var(--amarelo-forte);
-            cursor: pointer; position: relative;
+            cursor: pointer; position: relative; width: 50px;
         }
 
         #cart-count {
-            position: absolute; top: -5px; right: -10px;
+            position: absolute; top: -5px; right: 10px;
             background: #ff0000; color: #fff; font-size: 0.75rem;
             padding: 2px 7px; border-radius: 50%; font-weight: bold;
         }
 
-        .logo-box { display: flex; align-items: center; gap: 10px; }
-        .logo-text { font-size: 1.1rem; font-weight: 900; color: var(--amarelo-forte); text-transform: uppercase; }
+        /* LOGO CENTRALIZADA */
+        .logo-box { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 5px; 
+        }
+        .logo-img { height: 60px; max-width: 150px; object-fit: contain; }
+        .logo-text { font-size: 1.1rem; font-weight: 900; color: var(--amarelo-forte); text-transform: uppercase; letter-spacing: 1px; }
 
         .search-box { position: relative; max-width: 500px; margin: 15px auto 10px; padding: 0 10px; }
         .search-box i { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); color: var(--amarelo-forte); }
@@ -59,69 +67,55 @@
 
         .btn-shortcut {
             background: var(--preto-card); color: var(--amarelo-forte);
-            border: 1px solid var(--amarelo-forte); padding: 8px 15px;
+            border: 1px solid var(--amarelo-forte); padding: 6px 12px;
             border-radius: 20px; font-size: 0.7rem; font-weight: 900;
             cursor: pointer; text-transform: uppercase;
         }
 
-        /* CONTAINER PARA UM POD POR LINHA (ESTILO LISTA) */
+        /* GRID: UM POD POR LINHA (ESTILO LISTA) */
         .container { 
             display: flex;
-            flex-direction: column; /* Força um item embaixo do outro */
+            flex-direction: column;
             gap: 15px; 
             padding: 15px; 
-            max-width: 800px; /* Limita a largura para ficar centralizado e elegante */
+            max-width: 600px; 
             margin: 0 auto;
         }
 
-        /* CARD EM FORMATO DE LINHA */
         .card { 
             background: var(--preto-card); 
             border-radius: 12px; 
             padding: 15px; 
-            display: flex; /* Alinha imagem de um lado e texto do outro */
+            display: flex; 
             align-items: center;
             gap: 15px;
             color: #fff;
             box-shadow: 0 5px 15px rgba(0,0,0,0.5);
             border: 1px solid #333;
-            box-sizing: border-box;
             width: 100%;
+            box-sizing: border-box;
         }
 
-        .card-img-box {
-            flex: 0 0 120px; /* Largura fixa para a imagem */
-        }
-
+        .card-img-box { flex: 0 0 100px; }
         .card img { 
-            width: 120px; 
-            height: 120px; 
+            width: 100px; 
+            height: 100px; 
             object-fit: contain; 
             background: #fff; 
             border-radius: 8px; 
         }
         
         .card-info {
-            flex: 1; /* Ocupa o restante da linha */
+            flex: 1; 
             text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
-        .puffs { color: var(--amarelo-forte); font-weight: bold; font-size: 0.75rem; text-transform: uppercase; }
-        .card h3 { font-size: 1.1rem; margin: 5px 0; }
-        .price { font-size: 1.4rem; font-weight: 900; color: #20bf6b; margin: 5px 0; }
+        .puffs { color: var(--amarelo-forte); font-weight: bold; font-size: 0.7rem; text-transform: uppercase; }
+        .card h3 { font-size: 1rem; margin: 3px 0; }
+        .price { font-size: 1.3rem; font-weight: 900; color: #20bf6b; margin: 3px 0; }
         
-        .flavor-select { width: 100%; padding: 10px; background: #fff; color: #000; border-radius: 6px; margin: 10px 0; font-weight: bold; font-size: 0.8rem; border:none; }
-        .btn-add { width: 100%; padding: 12px; background: var(--amarelo-forte); color: #000; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.8rem; }
-
-        /* Ajuste para telas muito pequenas */
-        @media (max-width: 450px) {
-            .card { flex-direction: column; text-align: center; }
-            .card-info { text-align: center; width: 100%; }
-            .card-img-box { flex: none; }
-        }
+        .flavor-select { width: 100%; padding: 8px; background: #fff; color: #000; border-radius: 6px; margin: 8px 0; font-weight: bold; font-size: 0.8rem; border:none; }
+        .btn-add { width: 100%; padding: 10px; background: var(--amarelo-forte); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; }
 
         #cart-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -140,13 +134,14 @@
             <span id="cart-count">0</span>
         </div>
         <div class="logo-box">
+            <img src="logo.png" class="logo-img" alt="LOGO" onerror="this.src='https://via.placeholder.com/150x60?text=DH+MULTIPRODUTOS'">
             <div class="logo-text">DH MULTIPRODUTOS</div>
         </div>
-        <div style="width: 40px;"></div>
+        <div style="width: 50px;"></div>
     </div>
     <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" id="input-busca" placeholder="O que você procura?" onkeyup="filtrar()">
+        <input type="text" id="input-busca" placeholder="Pesquisar pod ou marca..." onkeyup="filtrar()">
     </div>
 </header>
 
@@ -162,7 +157,7 @@
 
 <div id="cart-modal">
     <div class="modal-content">
-        <h2 style="color: var(--amarelo-forte); text-align:center;">CARRINHO</h2>
+        <h2 style="color: var(--amarelo-forte); text-align:center;">MEU CARRINHO</h2>
         <div id="lista-carrinho"></div>
         <div style="margin-top:20px;">
             <input type="text" id="c-nome" placeholder="SEU NOME" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
@@ -170,7 +165,7 @@
             <select id="c-pag" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px;">
                 <option>Pix</option><option>Cartão</option><option>Dinheiro</option>
             </select>
-            <button onclick="finalizar()" style="width:100%; padding:18px; background:#25d366; color:#fff; border:none; border-radius:10px; font-weight:bold;">FINALIZAR WHATSAPP</button>
+            <button onclick="finalizar()" style="width:100%; padding:18px; background:#25d366; color:#fff; border:none; border-radius:10px; font-weight:bold;">PEDIR NO WHATSAPP</button>
             <button onclick="fecharCarrinho()" style="width:100%; margin-top:10px; background:none; color:#999; border:none;">Voltar</button>
         </div>
     </div>
@@ -178,13 +173,33 @@
 
 <script>
     const produtos = [
-        { nome: "IGNITE V80", puffs: "8 MIL💨", preco: "99,90", img: "v80.jpg", sabores: ["Bluberry💜 Limonada🍋", "Açaí🟣 Ice❄️", "Melancia🍉 Ice❄️", "Morango🍓 Ice❄️"] },
-        { nome: "IGNITE V155", puffs: "15 MIL💨", preco: "109,90", img: "v155.jpg", sabores: ["Tropical🌴💜Açaí", "Morango🍓Kiwi🥝", "Melancia🍉Ice🧊"] },
-        { nome: "ELFBAR 30K", puffs: "30 MIL💨", preco: "114,90", img: "elf30k.jpg", sabores: ["Menta💚 Melancia🍉", "Açaí🫐 Banana🍌"] },
-        { nome: "LIFE POD 10K", puffs: "10 MIL💨", preco: "129,90", img: "life10k.jpg", sabores: ["Menthol💚", "Miami Mint💚", "Água de Coco🥥"] },
-        { nome: "SEX ADDICT 28K", puffs: "28 MIL💨", preco: "119,90", img: "sexaddict.jpg", sabores: ["Menta💚Ice🧊", "Uva🍇Kiwi🥝"] },
-        { nome: "NIK BAR 10K", puffs: "10 MIL💨", preco: "79,90", img: "nikbar.jpg", sabores: ["Uva Ice🍇", "Melancia Ice🍉"] }
-        // ... Adicione os outros 21 pods aqui seguindo o mesmo padrão
+        { nome: "IGNITE V80", puffs: "8 MIL💨", preco: "99,90", img: "v80.jpg", sabores: ["Bluberry💜 Limonada🍋", "Tangerina🍊 Laranja🍊 Menta💚", "Romã🍎 Açaí🟣 Framboesa❤️", "Banana🍌 Cereja🍒", "Açaí🟣 Ice❄️", "Laranja🍊 Manga🥭", "Morango🍓 Ice❄️", "Menta💚 Ice❄️", "Maçã🍏 Verde", "Bluberry💜 Ice❄️", "Melancia🍉 Ice❄️", "Morango🍓️Kiwi🥝", "Uva🍇Ice❄️", "Uva🍇Kiwi🥝Menta💚"] },
+        { nome: "IGNITE V155", puffs: "15 MIL💨", preco: "109,90", img: "v155.jpg", sabores: ["Tropical🌴💜Açaí", "Morango🍓Kiwi🥝", "Morango🍓Banana🍌", "Melancia🍉Ice🧊", "Banana🍌Ice🧊", "Menta💚Ice🧊", "Melancia🍉Ice🧊"] },
+        { nome: "IGNITE V120", puffs: "12 MIL💨", preco: "104,90", img: "v120.jpg", sabores: ["Uva🍇Ice🧊", "🍋🍊 Limão Laranja", "Café ☕", "Maçã🍏Verde"] },
+        { nome: "IGNITE V150 PRO", puffs: "15 MIL💨", preco: "109,90", img: "v150pro.jpg", sabores: ["Menthol❄️", "Maçã🍏 Verde", "Uva🍇 Verde🍏", "Menta💚 Ice❄️", "Maçã Verde🍏Pêssego🍑Kiwi🥝", "Uva🍇Ice🧊"] },
+        { nome: "IGNITE V250", puffs: "25 MIL💨", preco: "129,90", img: "v250.jpg", sabores: ["Uva🍇 Gelada🧊", "Mentol💚", "Menta💚Ice🧊"] },
+        { nome: "IGNITE V300", puffs: "30 MIL💨", preco: "139,90", img: "v300.jpg", sabores: ["🌵🍋 Cactus e Refri de Limão", "Bluberry💜Morango🍓Coco🥥", "Morango🍓Ice🧊", "💚🍈 Menta e Melão", "🍌🥥 Banana Água de Coco", "🍓🥝 Morango e Kiwi", "🍓🍌 Morango e Banana", "Mentol💚", "Banana🍌 Gelada🧊", "Menta💚 Gelada🧊", "Uva🍇 Gelada🧊", "Pitaya💖 com Melancia🍉", "Maçã🍏Verde", "Chiclete🍬Melancia🍉"] },
+        { nome: "IGNITE V400", puffs: "40 MIL💨", preco: "149,90", img: "v400.jpg", sabores: ["Morango🍓 Banana🍌 Gelada🧊", "Cereja🍒Melancia🍉Ice🧊"] },
+        { nome: "IGNITE V400 MIX", puffs: "40 MIL💨", preco: "149,90", img: "v400mix.jpg", sabores: ["Chiclete🍬 de Uva🍇Pêssego🍑 Gelado🧊", "Morango🍓 Manga🥭/ Banana🍌 Gelada🧊", "Abacaxi🍍 Manga🥭/ Morango🍓 Gelado🧊", "Maracujá💛 Kiwi🥝/ Abacaxi🍍 Gelado🧊", "Melão🍈/ Mentol💚", "Banana🍌 Gelada🧊/ Morango🍓 Gelado🧊", "Maçã🍏 Gelada🧊/ Morango🍓 Melancia🍉", "Manga🥭 Gelada🧊/ Maracujá💛 Goiaba🍈", "Uva🍇 Gelada🧊/ Melancia🍉 Gelada🧊", "Pêssego🍑 Melancia🍉/ Manga🥭 Gelada🧊", "Melancia🍉 Uva🍇 Ice / Açaí💜 Ice", "Menta💚 Ice / Pêssego🍑 Uva🍇", "Uva🍇 Ice / Morango🍓", "Melancia🍉 Ice / Cereja🍒 Ice", "Laranja🍊 Ice / Morango🍓 Ice", "Bluberry💜 Ice / Amora🖤 Framboesa❤️", "Morango🍓 Melancia🍉 Ice / Uva🍇"] },
+        { nome: "IGNITE V400 SWEET", puffs: "40 MIL💨", preco: "149,90", img: "v400sweet.jpg", sabores: ["🍌🍒 Banana Cereja", "🍏 Maçã Verde", "🍑❤️❄️ Pêssego Framboesa Ice", "Bluberry💜Ice🧊", "Chiclete🍬Bluberry💙"] },
+        { nome: "P100 KIT", puffs: "10 MIL💨", preco: "119,90", img: "p100kit.jpg", sabores: ["Blueberry💜Ice🧊", "🍏 Maçã Verde"] },
+        { nome: "P100 REFIL", puffs: "10 MIL💨", preco: "99,90", img: "p100refil.jpg", sabores: ["Maçã Verde🍏", "Blueberry💜Ice🧊"] },
+        { nome: "ELF BAR ULTRA SLIM", puffs: "18 MIL💨", preco: "99,90", img: "ultraslim.jpg", sabores: ["Morango🍓 Melancia🍉", "Bluberry💜 Gelado❄️", "Chiclete de Ment💚", "Manga🥭 Ice❄️", "Melancia🍉 Menta💚", "Uva🍇 Framboesa❤️", "Duas Maçãs🍎🍏"] },
+        { nome: "ELFBAR EW KIT 9K", puffs: "9 MIL💨", preco: "99,90", img: "ewkit.jpg", sabores: ["🍉 Melancia", "🍒🍓 Cereja Morango", "🍒 Cereja", "🥭🍑❄️ Manga Pêssego Ice"] },
+        { nome: "REFIL EW 9K", puffs: "9 MIL💨", preco: "79,90", img: "ewrefil9k.jpg", sabores: ["💜🍓❄️ Bluberry Morango Ice", "🍒🍓 Cereja Morango"] },
+        { nome: "REFIL EW 16K", puffs: "16 MIL💨", preco: "99,90", img: "ewrefil16k.jpg", sabores: ["🍇💜 Amora Bluberry", "Maçã🍏Verde💚Gelada🧊"] },
+        { nome: "ELFBAR 23K", puffs: "23 MIL💨", preco: "109,90", img: "elf23k.jpg", sabores: ["Bluberry💜Morango🍓Ice🧊", "Menta💚Ice🧊", "Bluberry💜Frutas Tropicais🍍🥭🥝", "Pêra🍐Bluberry💙", "Uva🍇"] },
+        { nome: "ELFBAR 30K", puffs: "30 MIL💨", preco: "114,90", img: "elf30k.jpg", sabores: ["Menta💚 Melancia🍉 Melão🍈", "Açaí🫐 Banana🍌 Ice❄️", "Café☕ Ice❄️", "Coco🥥 Morango🍓 Ice❄️", "Banana🍌Coco🥥", "Uva🍇Limonada🍋Ice🧊", "Melancia🍉Limonada🍋Ice🧊"] },
+        { nome: "ELFBAR 40K", puffs: "40 MIL💨", preco: "129,90", img: "elf40k.jpg", sabores: ["Bluberry💜Morango🍓Ice🧊", "Frutas Tropicais🍍🥭🥝", "Bluberry💜 Frutas Tropicais🍍🥭🥝", "Manga🥭Ice🧊"] },
+        { nome: "ICE KING SUMMER", puffs: "40 MIL💨", preco: "129,90", img: "summer.jpg", sabores: ["Coca Cola🥤 Refrescante❄️", "Pêssego🍑 Bluberry💜 Refrescante❄️", "Amora🫐 Refrescante❄️", "Cereja Tripla🍒", "Maçã Verde🍏 Refrescante❄️"] },
+        { nome: "ELFBAR TRIO 40K", puffs: "40 MIL💨", preco: "129,90", img: "trio.jpg", sabores: ["Abacaxi🍍Laranja🍊Ice🧊", "Maçã🍏Verde Ice🧊", "Bluberry💜 Ice🧊", "Pêssego🍑"] },
+        { nome: "LIFE POD 10K", puffs: "10 MIL💨", preco: "129,90", img: "life10k.jpg", sabores: ["Menthol💚", "Menta💚Ice🧊", "Maracujá💛Ice🧊", "Miami Mint💚", "Amora🖤 Ice🧊", "Menta Suave💚", "Café☕ com Chocolate🍫", "Pitaya❤️Bluberry💜Morango🍓", "Uva🍇Mel🍯", "Água de Coco🥥", "Pitaya❤️Ice🧊", "Chiclete🍬Melancia🍉", "Pêssego🍑Framboesa🍓", "Kiwi🥝Framboesa❤️", "Chiclete🍬Menta💚", "Chiclete🍬Bluberry💜", "Banana🍌Ice🧊", "Bluberry💜Maracujá💛Menta💚", "Bluberry💜Menta💚", "Morango🍓Melancia🍉", "Melancia🍉Pêssego🍑Ice🧊"] },
+        { nome: "REFIL LIFE POD 10K", puffs: "10 MIL💨", preco: "99,90", img: "liferefil.jpg", sabores: ["Menthol💚", "Menta💚Ice🧊", "Miami Mint💚", "Amora🖤 Ice🧊", "Maracujá💛Ice🧊", "Menta Suave💚", "Café☕ com Chocolate🍫", "Pitaya❤️Bluberry💜Morango🍓", "Uva🍇Mel🍯", "Água de Coco🥥", "Pitaya❤️Ice🧊", "Chiclete🍬Melancia🍉", "Pêssego🍑Framboesa🍓", "Kiwi🥝Framboesa❤️", "Chiclete🍬Menta💚", "Chiclete🍬Bluberry💜", "Banana🍌Ice🧊", "Bluberry💜Maracujá💛Menta💚", "Bluberry💜Menta💚", "Melancia🍉Pêssego🍑Ice🧊"] },
+        { nome: "LIFE POD SK", puffs: "10 MIL💨", preco: "119,90", img: "lifesk.jpg", sabores: ["Bluberry💜Limão🍋‍🟩Ice🧊", "Morango🍓 Kiwi🥝Ice🧊", "Maçã Verde🍏 Ice🧊", "Manga🥭 Ice🧊", "Bluberry Limão Ice", "Sorvete🍨 de Morango🍓", "Menta💚Ice🧊", "Morango🍓 Ice🧊", "Energético⚡Monster", "Cereja🍒Limonada🍋", "Morango🍓Melancia🍉Ice🧊"] },
+        { nome: "SEX ADDICT 28K", puffs: "28 MIL💨", preco: "119,90", img: "sexaddict.jpg", sabores: ["Menta💚Ice🧊", "Melancia🍉Ice🧊", "Uva🍇Kiwi🥝Ice🧊", "Morango🍓Melancia🍉Ice🧊", "Morango🍓Banana🍌Ice🧊", "Melancia🍉Uva🍇Ice🧊", "Uva🍇Açaí💜Ice🧊", "Menthol💚", "Morango🍓Ice🧊"] },
+        { nome: "IGNITE V55 ULTRA SLIM", puffs: "5.5 MIL💨", preco: "89,90", img: "v55.jpg", sabores: ["Menta💚Ice🧊", "Uva🍇Verde💚", "Morango🍓Melancia🍉", "Melancia🍉Ice🧊", "Uva🍇Ice🧊", "Morango🍓Kiwi🥝", "Morango🍓Banana🍌", "Uva🍇Maçã🍎Açaí🫐", "Menta💚Doce🍬"] },
+        { nome: "VAPE SOUL 20K ULTRA", puffs: "20 MIL💨", preco: "79,90", img: "vapesoul.jpg", sabores: ["Menta💚 Melancia🍉", "Uva🍇 Framboesa❤️ Limão🍋", "Manga🥭 Ice❄️", "Framboesa❤️ Uva🍇", "Menta💚 Ice❄️", "Maracujá💛 Uva🍇"] },
+        { nome: "NIK BAR 10K", puffs: "10 MIL💨", preco: "79,90", img: "nikbar.jpg", sabores: ["💚❄️ Menthol", "🍇❄️ Uva Ice", "🍉❄️ Melancia Ice", "🍏❄️ Maçã Verde Ice", "💜❄️ Bluberry e Framboesa❤️ Ice"] }
     ];
 
     let carrinho = [];
@@ -244,4 +259,24 @@
 
     function finalizar() {
         const n = document.getElementById('c-nome').value;
-        const e = document.getElementById('c-end').value
+        const e = document.getElementById('c-end').value;
+        if(!n || !e) return alert("Preencha Nome e Endereço!");
+        let m = `*PEDIDO DH MULTIPRODUTOS*\n\nCliente: ${n}\nEndereço: ${e}\n\nITENS:\n`;
+        carrinho.forEach(i => m += `- ${i.nome} (${i.sabor})\n`);
+        window.open("https://wa.me/5538999845134?text=" + encodeURIComponent(m));
+    }
+
+    function filtrar() {
+        const t = document.getElementById('input-busca').value.toLowerCase();
+        renderizar(produtos.filter(p => p.nome.toLowerCase().includes(t)));
+    }
+
+    function atalho(marca) {
+        document.getElementById('input-busca').value = marca;
+        filtrar();
+    }
+
+    renderizar(produtos);
+</script>
+</body>
+</html>
