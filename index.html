@@ -8,7 +8,7 @@
     <style>
         :root {
             --amarelo-forte: #FFFF00;
-            --fundo-base: #ffffff;
+            --fundo-base: #1a1a1a;
             --preto-card: #000000;
         }
 
@@ -16,7 +16,7 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background-color: var(--fundo-base);
             margin: 0; padding: 0;
-            color: #000;
+            color: #ffffff;
         }
 
         header {
@@ -43,7 +43,7 @@
         }
 
         .logo-box { display: flex; align-items: center; gap: 10px; }
-        .logo-img { height: 40px; width: 40px; border-radius: 5px; object-fit: cover; }
+        .logo-img { height: 45px; width: 45px; border-radius: 5px; object-fit: cover; }
         .logo-text { font-size: 1.2rem; font-weight: 900; color: var(--amarelo-forte); text-transform: uppercase; }
 
         .search-box { position: relative; max-width: 500px; margin: 15px auto 10px; padding: 0 10px; }
@@ -55,41 +55,67 @@
 
         .shortcuts {
             display: flex; justify-content: center; gap: 8px; padding: 10px;
-            flex-wrap: wrap; background: #f4f4f4; border-bottom: 1px solid #ddd;
+            flex-wrap: wrap; background: #111; border-bottom: 1px solid #333;
         }
 
         .btn-shortcut {
             background: var(--preto-card); color: var(--amarelo-forte);
             border: 1px solid var(--amarelo-forte); padding: 8px 15px;
-            border-radius: 20px; font-size: 0.75rem; font-weight: 900;
+            border-radius: 20px; font-size: 0.7rem; font-weight: 900;
             cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
 
-        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; }
-
-        .card { 
-            background: var(--preto-card); border-radius: 15px; 
-            padding: 20px; text-align: center; color: #fff;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15); border: 2px solid #000;
+        .container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 15px; 
+            padding: 15px; 
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .card img { max-width: 100%; height: 180px; object-fit: contain; margin-bottom: 10px; background: #fff; border-radius: 10px; }
-        .puffs { color: var(--amarelo-forte); font-weight: bold; font-size: 0.8rem; display: block; margin-bottom: 5px; }
-        .price { font-size: 1.8rem; font-weight: 900; color: #20bf6b; margin: 10px 0; }
-        .flavor-select { width: 100%; padding: 12px; background: #fff; color: #000; border-radius: 8px; margin-bottom: 15px; font-weight: bold; border:none; }
-        .btn-add { width: 100%; padding: 15px; background: var(--amarelo-forte); color: #000; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
+        .card { 
+            background: var(--preto-card); 
+            border-radius: 12px; 
+            padding: 12px; 
+            text-align: center; 
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 460px;
+        }
+
+        .card img { 
+            width: 100%; 
+            height: 180px; 
+            object-fit: contain; 
+            margin-bottom: 10px; 
+            background: #fff; 
+            border-radius: 8px; 
+        }
+        
+        .puffs { color: var(--amarelo-forte); font-weight: bold; font-size: 0.7rem; text-transform: uppercase; }
+        .card h3 { font-size: 0.9rem; margin: 8px 0; min-height: 35px; }
+        .price { font-size: 1.4rem; font-weight: 900; color: #20bf6b; margin: 5px 0; }
+        
+        .flavor-select { width: 100%; padding: 10px; background: #fff; color: #000; border-radius: 6px; margin-bottom: 10px; font-weight: bold; font-size: 0.8rem; border:none; cursor: pointer; }
+        .btn-add { width: 100%; padding: 12px; background: var(--amarelo-forte); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; }
+
+        @media (min-width: 768px) {
+            .container { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+            .card { min-height: 520px; }
+            .card img { height: 240px; }
+        }
 
         #cart-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255,255,255,0.95); z-index: 2000; overflow-y: auto; padding: 20px; box-sizing: border-box;
+            background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 20px; box-sizing: border-box;
         }
 
         .modal-content { max-width: 500px; margin: 0 auto; background: #000; padding: 25px; border-radius: 15px; border: 2px solid var(--amarelo-forte); color: #fff; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .item-cart { background: #222; padding: 10px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .form-label { display: block; margin: 15px 0 5px; color: var(--amarelo-forte); font-weight: bold; }
-        .form-input { width: 100%; padding: 12px; background: #111; color: white; border: 1px solid #444; border-radius: 8px; box-sizing: border-box; margin-bottom: 10px; }
-        .btn-send { width: 100%; padding: 18px; background: #25d366; color: white; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 1.1rem; width: 100%; }
     </style>
 </head>
 <body>
@@ -124,23 +150,16 @@
 
 <div id="cart-modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <h2 style="color: var(--amarelo-forte); margin:0;">MEU PEDIDO</h2>
-            <span style="cursor:pointer; font-size:2rem; color:#fff" onclick="fecharCarrinho()">&times;</span>
-        </div>
+        <h2 style="color: var(--amarelo-forte); text-align:center;">MEU PEDIDO</h2>
         <div id="lista-carrinho"></div>
-        <div class="form-checkout">
-            <label class="form-label">NOME COMPLETO:</label>
-            <input type="text" class="form-input" id="c-nome">
-            <label class="form-label">ENDEREÇO DE ENTREGA:</label>
-            <input type="text" class="form-input" id="c-end">
-            <label class="form-label">FORMA DE PAGAMENTO:</label>
-            <select class="form-input" id="c-pag">
-                <option>Pix</option>
-                <option>Cartão</option>
-                <option>Dinheiro</option>
+        <div style="margin-top:20px;">
+            <input type="text" id="c-nome" placeholder="SEU NOME" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:none;">
+            <input type="text" id="c-end" placeholder="ENDEREÇO DE ENTREGA" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:none;">
+            <select id="c-pag" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:none;">
+                <option>Pix</option><option>Cartão</option><option>Dinheiro</option>
             </select>
-            <button class="btn-send" onclick="finalizar()">ENVIAR PARA WHATSAPP</button>
+            <button onclick="finalizar()" style="width:100%; padding:18px; background:#25d366; color:#fff; border:none; border-radius:10px; font-weight:bold; cursor:pointer;">FINALIZAR NO WHATSAPP</button>
+            <button onclick="fecharCarrinho()" style="width:100%; margin-top:15px; background:none; color:#999; border:none; cursor:pointer;">Voltar</button>
         </div>
     </div>
 </div>
@@ -148,11 +167,11 @@
 <script>
     const produtos = [
         { nome: "IGNITE V80", puffs: "8 MIL💨", preco: "99,90", img: "v80.jpg", sabores: ["Bluberry💜 Limonada🍋", "Tangerina🍊 Laranja🍊 Menta💚", "Romã🍎 Açaí🟣 Framboesa❤️", "Banana🍌 Cereja🍒", "Açaí🟣 Ice❄️", "Laranja🍊 Manga🥭", "Morango🍓 Ice❄️", "Menta💚 Ice❄️", "Maçã🍏 Verde", "Bluberry💜 Ice❄️", "Melancia🍉 Ice❄️", "Morango🍓️Kiwi🥝", "Uva🍇Ice❄️", "Uva🍇Kiwi🥝Menta💚"] },
-        { nome: "IGNITE V155", puffs: "15 MIL💨", preco: "109,90", img: "v155.jpg", sabores: ["Tropical🌴💜Açaí", "Morango🍓Kiwi🥝", "Morango🍓Banana🍌", "Melancia🍉Ice🧊", "Banana🍌Ice🧊", "Menta💚Ice🧊"] },
+        { nome: "IGNITE V155", puffs: "15 MIL💨", preco: "109,90", img: "v155.jpg", sabores: ["Tropical🌴💜Açaí", "Morango🍓Kiwi🥝", "Morango🍓Banana🍌", "Melancia🍉Ice🧊", "Banana🍌Ice🧊", "Menta💚Ice🧊", "Melancia🍉Ice🧊"] },
         { nome: "IGNITE V120", puffs: "12 MIL💨", preco: "104,90", img: "v120.jpg", sabores: ["Uva🍇Ice🧊", "🍋🍊 Limão Laranja", "Café ☕", "Maçã🍏Verde"] },
         { nome: "IGNITE V150 PRO", puffs: "15 MIL💨", preco: "109,90", img: "v150pro.jpg", sabores: ["Menthol❄️", "Maçã🍏 Verde", "Uva🍇 Verde🍏", "Menta💚 Ice❄️", "Maçã Verde🍏Pêssego🍑Kiwi🥝", "Uva🍇Ice🧊"] },
-        { nome: "IGNITE V250", puffs: "25 MIL💨", preco: "129,90", img: "v250.jpg", sabores: ["Uva🍇 Gelada🧊", "Mentol💚", "Menta💚Ice🧊", "Confirmar"] },
-        { nome: "IGNITE V300", puffs: "30 MIL💨", preco: "139,90", img: "v300.jpg", sabores: ["🌵🍋 Cactus e Limão", "Bluberry💜Morango🍓Coco🥥", "Morango🍓Ice🧊", "💚🍈 Menta e Melão", "🍌🥥 Banana Água de Coco", "🍓🥝 Morango e Kiwi", "🍓🍌 Morango e Banana", "Mentol💚", "Banana🍌 Gelada🧊", "Menta💚 Gelada🧊", "Uva🍇 Gelada🧊", "Pitaya💖 com Melancia🍉", "Maçã🍏Verde", "Chiclete🍬Melancia🍉"] },
+        { nome: "IGNITE V250", puffs: "25 MIL💨", preco: "129,90", img: "v250.jpg", sabores: ["Uva🍇 Gelada🧊", "Mentol💚", "Menta💚Ice🧊"] },
+        { nome: "IGNITE V300", puffs: "30 MIL💨", preco: "139,90", img: "v300.jpg", sabores: ["🌵🍋 Cactus e Refri de Limão", "Bluberry💜Morango🍓Coco🥥", "Morango🍓Ice🧊", "💚🍈 Menta e Melão", "🍌🥥 Banana Água de Coco", "🍓🥝 Morango e Kiwi", "🍓🍌 Morango e Banana", "Mentol💚", "Banana🍌 Gelada🧊", "Menta💚 Gelada🧊", "Uva🍇 Gelada🧊", "Pitaya💖 com Melancia🍉", "Maçã🍏Verde", "Chiclete🍬Melancia🍉"] },
         { nome: "IGNITE V400", puffs: "40 MIL💨", preco: "149,90", img: "v400.jpg", sabores: ["Morango🍓 Banana🍌 Gelada🧊", "Cereja🍒Melancia🍉Ice🧊"] },
         { nome: "IGNITE V400 MIX", puffs: "40 MIL💨", preco: "149,90", img: "v400mix.jpg", sabores: ["Chiclete🍬 de Uva🍇Pêssego🍑 Gelado🧊", "Morango🍓 Manga🥭/ Banana🍌 Gelada🧊", "Abacaxi🍍 Manga🥭/ Morango🍓 Gelado🧊", "Maracujá💛 Kiwi🥝/ Abacaxi🍍 Gelado🧊", "Melão🍈/ Mentol💚", "Banana🍌 Gelada🧊/ Morango🍓 Gelado🧊", "Maçã🍏 Gelada🧊/ Morango🍓 Melancia🍉", "Manga🥭 Gelada🧊/ Maracujá💛 Goiaba🍈", "Uva🍇 Gelada🧊/ Melancia🍉 Gelada🧊", "Pêssego🍑 Melancia🍉/ Manga🥭 Gelada🧊", "Melancia🍉 Uva🍇 Ice / Açaí💜 Ice", "Menta💚 Ice / Pêssego🍑 Uva🍇", "Uva🍇 Ice / Morango🍓", "Melancia🍉 Ice / Cereja🍒 Ice", "Laranja🍊 Ice / Morango🍓 Ice", "Bluberry💜 Ice / Amora🖤 Framboesa❤️", "Morango🍓 Melancia🍉 Ice / Uva🍇"] },
         { nome: "IGNITE V400 SWEET", puffs: "40 MIL💨", preco: "149,90", img: "v400sweet.jpg", sabores: ["🍌🍒 Banana Cereja", "🍏 Maçã Verde", "🍑❤️❄️ Pêssego Framboesa Ice", "Bluberry💜Ice🧊", "Chiclete🍬Bluberry💙"] },
@@ -182,18 +201,22 @@
         const grid = document.getElementById('grid-produtos');
         grid.innerHTML = '';
         lista.forEach((p) => {
-            // Encontra o índice real na lista global para o ID do select
             const idxOriginal = produtos.findIndex(item => item.nome === p.nome);
             grid.innerHTML += `
-                <div class="card">
-                    <img src="${p.img}" onerror="this.src='logo.png'">
-                    <span class="puffs">${p.puffs}</span>
-                    <h3 style="margin:5px 0;">${p.nome}</h3>
-                    <div class="price">R$ ${p.preco}</div>
-                    <select class="flavor-select" id="s-${idxOriginal}">
-                        ${p.sabores.map(s => `<option value="${s}">${s}</option>`).join('')}
-                    </select>
-                    <button class="btn-add" onclick="add(${idxOriginal})">Adicionar no Carrinho</button>
+                <div class="card" data-nome="${p.nome}">
+                    <div>
+                        <img src="${p.img}" onerror="this.src='logo.png'">
+                        <span class="puffs">${p.puffs}</span>
+                        <h3>${p.nome}</h3>
+                    </div>
+                    <div>
+                        <div class="price">R$ ${p.preco}</div>
+                        <select class="flavor-select" id="s-${idxOriginal}">
+                            <option value="">Escolha o sabor! 👇</option>
+                            ${p.sabores.map(s => `<option value="${s}">${s}</option>`).join('')}
+                        </select>
+                        <button class="btn-add" onclick="add(${idxOriginal})">Adicionar</button>
+                    </div>
                 </div>
             `;
         });
@@ -202,9 +225,10 @@
     function add(idx) {
         const p = produtos[idx];
         const s = document.getElementById(`s-${idx}`).value;
+        if(!s) return alert("Escolha o sabor primeiro!");
         carrinho.push({ nome: p.nome, sabor: s, preco: p.preco });
         document.getElementById('cart-count').innerText = carrinho.length;
-        alert("✅ Adicionado: " + p.nome);
+        alert("✅ " + p.nome + " adicionado!");
     }
 
     function abrirCarrinho() {
@@ -214,33 +238,24 @@
         let total = 0;
         carrinho.forEach((item, i) => {
             total += parseFloat(item.preco.replace(',', '.'));
-            div.innerHTML += `<div class="item-cart"><span>${item.nome} (${item.sabor})</span> <button onclick="remover(${i})" style="color:red; background:none; border:none; cursor:pointer;">X</button></div>`;
+            div.innerHTML += `<div style="background:#222; padding:10px; margin-bottom:5px; border-radius:5px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.85rem;">${item.nome} (${item.sabor})</span>
+                <span onclick="remover(${i})" style="color:red; cursor:pointer; font-weight:bold;">X</span>
+            </div>`;
         });
-        div.innerHTML += `<div style="text-align:right; font-weight:bold; color:var(--amarelo-forte); margin-top:10px;">TOTAL: R$ ${total.toFixed(2).replace('.', ',')}</div>`;
+        div.innerHTML += `<h3 style="text-align:right; color:var(--amarelo-forte); margin-top:10px;">TOTAL: R$ ${total.toFixed(2).replace('.', ',')}</h3>`;
         document.getElementById('cart-modal').style.display = 'block';
     }
 
     function fecharCarrinho() { document.getElementById('cart-modal').style.display = 'none'; }
-
-    function remover(i) {
-        carrinho.splice(i, 1);
-        document.getElementById('cart-count').innerText = carrinho.length;
-        if(carrinho.length === 0) fecharCarrinho(); else abrirCarrinho();
-    }
+    function remover(i) { carrinho.splice(i,1); document.getElementById('cart-count').innerText = carrinho.length; if(carrinho.length === 0) fecharCarrinho(); else abrirCarrinho(); }
 
     function finalizar() {
         const n = document.getElementById('c-nome').value;
         const e = document.getElementById('c-end').value;
-        const pag = document.getElementById('c-pag').value;
-        if(!n || !e) return alert("Preencha nome e endereço!");
-
-        let m = `*PEDIDO DH MULTIPRODUTOS*\n\n👤 *Cliente:* ${n}\n📍 *End:* ${e}\n💳 *Pag:* ${pag}\n\n*ITENS:*\n`;
-        let total = 0;
-        carrinho.forEach(item => {
-            m += `- ${item.nome} (${item.sabor}) - R$ ${item.preco}\n`;
-            total += parseFloat(item.preco.replace(',', '.'));
-        });
-        m += `\n*TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        if(!n || !e) return alert("Preencha Nome e Endereço!");
+        let m = `*PEDIDO DH MULTIPRODUTOS*\n\nCliente: ${n}\nEndereço: ${e}\n\nITENS:\n`;
+        carrinho.forEach(i => m += `- ${i.nome} (${i.sabor})\n`);
         window.open("https://wa.me/5538999845134?text=" + encodeURIComponent(m));
     }
 
