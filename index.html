@@ -10,7 +10,7 @@
             --amarelo-forte: #FFFF00;
             --fundo-base: #1a1a1a;
             --preto-card: #000000;
-            --verde-whatsapp: #2dfc71; /* Verde mais vivo e chamativo */
+            --verde-whatsapp: #2dfc71;
         }
 
         body {
@@ -81,7 +81,17 @@
         }
 
         .card-img-box { flex: 0 0 100px; }
-        .card img { width: 100px; height: 100px; object-fit: contain; background: #fff; border-radius: 8px; }
+        
+        /* AJUSTE AQUI: Fundo preto no quadrado da imagem */
+        .card img { 
+            width: 100px; 
+            height: 100px; 
+            object-fit: contain; 
+            background: #000; /* Fundo Preto */
+            border: 1px solid #333; /* Borda fina para dar profundidade */
+            border-radius: 8px; 
+        }
+        
         .card-info { flex: 1; text-align: left; }
         .puffs { color: var(--amarelo-forte); font-weight: bold; font-size: 0.7rem; text-transform: uppercase; }
         .card h3 { font-size: 1rem; margin: 3px 0; }
@@ -89,7 +99,6 @@
         .flavor-select { width: 100%; padding: 8px; background: #fff; color: #000; border-radius: 6px; margin: 8px 0; font-weight: bold; font-size: 0.8rem; border:none; }
         .btn-add { width: 100%; padding: 10px; background: var(--amarelo-forte); color: #000; border: none; border-radius: 8px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; }
 
-        /* --- FIX PROPORCIONAL DO CARRINHO --- */
         #cart-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 15px; box-sizing: border-box;
@@ -176,6 +185,7 @@
 </div>
 
 <script>
+    // Mantive sua lista de produtos e funções exatamente como estavam
     const produtos = [
         { nome: "IGNITE V80", puffs: "8 MIL💨", preco: "99,90", img: "v80.jpg", sabores: ["Bluberry💜 Limonada🍋", "Tangerina🍊 Laranja🍊 Menta💚", "Romã🍎 Açaí🟣 Framboesa❤️", "Banana🍌 Cereja🍒", "Açaí🟣 Ice❄️", "Laranja🍊 Manga🥭", "Morango🍓 Ice❄️", "Menta💚 Ice❄️", "Maçã🍏 Verde", "Bluberry💜 Ice❄️", "Melancia🍉 Ice❄️", "Morango🍓️Kiwi🥝", "Uva🍇Ice❄️", "Uva🍇Kiwi🥝Menta💚"] },
         { nome: "IGNITE V155", puffs: "15 MIL💨", preco: "109,90", img: "v155.jpg", sabores: ["Tropical🌴💜Açaí", "Morango🍓Kiwi🥝", "Morango🍓Banana🍌", "Melancia🍉Ice🧊", "Banana🍌Ice🧊", "Menta💚Ice🧊", "Melancia🍉Ice🧊"] },
