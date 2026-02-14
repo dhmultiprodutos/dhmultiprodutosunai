@@ -8,7 +8,7 @@
     <style>
         :root {
             --amarelo-forte: #FFFF00;
-            --fundo-base: #1a1a1a;
+            --fundo-base: #ffffff; /* ALTERADO PARA BRANCO */
             --preto-card: #000000;
             --verde-whatsapp: #2dfc71;
         }
@@ -17,7 +17,7 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background-color: var(--fundo-base);
             margin: 0; padding: 0;
-            color: #ffffff;
+            color: #000000; /* Texto base agora é preto */
             padding-bottom: 90px;
         }
 
@@ -84,11 +84,12 @@
             max-width: 600px; margin: 0 auto;
         }
 
+        /* --- CARDS MANTIDOS EM PRETO PARA DESTAQUE NO FUNDO BRANCO --- */
         .card { 
             background: var(--preto-card); border-radius: 18px; padding: 15px; 
             display: flex; align-items: center; gap: 15px;
-            color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border: 1px solid #333; width: 100%; min-height: 200px; box-sizing: border-box;
+            color: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 1px solid #ddd; width: 100%; min-height: 200px; box-sizing: border-box;
         }
 
         .card-img-box { 
@@ -129,7 +130,7 @@
             bottom: 0;
             width: 100%;
             z-index: 1000;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
         }
 
         .insta-link {
@@ -150,7 +151,7 @@
 
         #cart-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000; overflow-y: auto; padding: 15px; box-sizing: border-box;
+            background: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; padding: 15px; box-sizing: border-box;
         }
 
         .modal-content { 
@@ -337,3 +338,4 @@
 </script>
 </body>
 </html>
+
