@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel ADM | DH MULTIPRODUTOS</title>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    <style>
+        :root { --amarelo: #FFFF00; --preto: #000000; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
+        .container { max-width: 700px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: var(--preto); border-bottom: 3px solid var(--amarelo); padding-bottom: 10px; text-transform: uppercase; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
+        button#btn-salvar { width: 100%; padding: 15px; background: var(--preto); color: var(--amarelo); border: none; border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .product-item { background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--preto); }
+        .btn-delete { background: #ff4d4d; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Painel Administrativo</h2>
+    
+    <div class="form-group">
+        <label>Nome do Pod:</label>
+        <input type="text" id="nome" placeholder="Ex: IGNITE V80">
+    </div>
+
+    <div class="form-group">
+        <label>Puffs:</label>
+        <input type="text" id="puffs" placeholder="Ex: 8 MIL💨">
+    </div>
+
+    <div class="form-group">
+        <label>Preço (R$):</label>
+        <input type="text" id="preco" placeholder="Ex: 99,90">
+    </div>
+
+    <div class="form-group">
+        <label>Link da Imagem:</label>
+        <input type="text" id="img" placeholder="Ex: v80.jpg">
+    </div>
+
+    <div class="form-group">
+        <label>Sabores (separe por vírgula):</label>
+        <input type="text" id="sabores" placeholder="Ex: Menta, Uva, Melancia">
+    </div>
+
+    <button id="btn-salvar" onclick="salvarProduto()">Publicar no Catálogo</button>
+    <hr>
+    <div id="lista-produtos-adm"></div>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0JxoTvbSYkepGbaRS6B6w5_f4yECk_EE",
+        authDomain: "dhmultimascas.firebaseapp.com",
+        databaseURL: "https://dhmultimascas-default-rtdb.firebaseio.com",
+        projectId: "dhmultimascas",
+        storageBucket: "dhmultimascas.firebasestorage.app",
+        messagingSenderId: "912423252324",
+        appId: "1:912423252324:web:acac2ef0e85bfd2f780a71"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    function salvarProduto() {
+        const nome = document.getElementById('nome').value;
+        const puffs = document.getElementById('puffs').value;
+        const preco = document.getElementById('preco').value;
+        const img = document.getElementById('img').value;
+        const saboresRaw = document.getElementById('sabores').value;
+
+        if(!nome || !preco) return alert("Preencha Nome e Preço!");
+
+        const sabores = saboresRaw.split(',').map(s => s.trim()).filter(s => s !== "");
+
+        database.ref('produtos').push().set({
+            nome, puffs, preco, img, sabores
+        }).then(() => {
+            alert("✅ Produto adicionado!");
+            document.querySelectorAll('input').forEach(i => i.value = "");
+        });
+    }
+
+    database.ref('produtos').on('value', (snapshot) => {
+        const lista = document.getElementById('lista-produtos-adm');
+        lista.innerHTML = "";
+        snapshot.forEach((item) => {
+            const p = item.val();
+            lista.innerHTML += `
+                <div class="product-item">
+                    <div><strong>${p.nome}</strong> (${p.puffs}) - R$ ${p.preco}</div>
+                    <button class="btn-delete" onclick="remover('${item.key}')">Excluir</button>
+                </div>`;
+        });
+    });
+
+    function remover(id) {
+        if(confirm("Deseja apagar?")) database.ref('produtos/' + id).remove();
+    }
+</script>
+</body>
+</html>
