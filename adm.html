@@ -6,23 +6,47 @@
     <title>Painel ADM | DH MULTIPRODUTOS</title>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    
     <style>
-        :root { --amarelo: #FFFF00; --preto: #000000; }
+        :root {
+            --amarelo: #FFFF00;
+            --preto: #000000;
+        }
         body { font-family: 'Segoe UI', sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
-        .container { max-width: 700px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .container { max-width: 700px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: none; } /* Escondido até acertar a senha */
+        
         h2 { text-align: center; color: var(--preto); border-bottom: 3px solid var(--amarelo); padding-bottom: 10px; text-transform: uppercase; }
+        
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
-        input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; outline: none; }
-        button#btn-salvar { width: 100%; padding: 15px; background: var(--preto); color: var(--amarelo); border: none; border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
-        .product-item { background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--preto); }
-        .btn-delete { background: #ff4d4d; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        
+        input { 
+            width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; 
+            box-sizing: border-box; font-size: 1rem; outline: none;
+        }
+
+        button#btn-salvar { 
+            width: 100%; padding: 15px; background: var(--preto); color: var(--amarelo); 
+            border: none; border-radius: 8px; font-weight: 900; font-size: 1.1rem; 
+            cursor: pointer; text-transform: uppercase; margin-top: 10px;
+        }
+
+        .product-item { 
+            background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; 
+            display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--preto);
+        }
+
+        .btn-delete { 
+            background: #ff4d4d; color: white; border: none; padding: 8px 15px; 
+            border-radius: 5px; cursor: pointer; font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="painel-conteudo">
     <h2>Painel Administrativo</h2>
+    <p style="text-align: center; color: #666; font-size: 0.9rem;">Gerencie o estoque e preços do catálogo</p>
     
     <div class="form-group">
         <label>Nome do Pod:</label>
@@ -40,7 +64,7 @@
     </div>
 
     <div class="form-group">
-        <label>Link da Imagem:</label>
+        <label>Link da Imagem (Nome do arquivo no GitHub):</label>
         <input type="text" id="img" placeholder="Ex: v80.jpg">
     </div>
 
@@ -50,11 +74,25 @@
     </div>
 
     <button id="btn-salvar" onclick="salvarProduto()">Publicar no Catálogo</button>
-    <hr>
+
+    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+    <div style="font-weight: 900; color: #666; margin-bottom: 15px;">PRODUTOS ATIVOS:</div>
     <div id="lista-produtos-adm"></div>
 </div>
 
 <script>
+    // --- TRAVA DE SEGURANÇA ---
+    const senhaCorreta = "DH00";
+    const tentativa = prompt("Digite a senha de acesso ao Painel:");
+
+    if (tentativa === senhaCorreta) {
+        document.getElementById('painel-conteudo').style.display = 'block';
+    } else {
+        alert("Senha incorreta! Acesso negado.");
+        document.body.innerHTML = "<div style='text-align:center; margin-top:100px;'><h1>🚫 Acesso Restrito</h1><p>Você não tem permissão para acessar esta página.</p></div>";
+    }
+
+    // --- CONFIGURAÇÃO FIREBASE ---
     const firebaseConfig = {
         apiKey: "AIzaSyA0JxoTvbSYkepGbaRS6B6w5_f4yECk_EE",
         authDomain: "dhmultimascas.firebaseapp.com",
@@ -82,7 +120,7 @@
         database.ref('produtos').push().set({
             nome, puffs, preco, img, sabores
         }).then(() => {
-            alert("✅ Produto adicionado!");
+            alert("✅ Produto adicionado com sucesso!");
             document.querySelectorAll('input').forEach(i => i.value = "");
         });
     }
@@ -101,8 +139,11 @@
     });
 
     function remover(id) {
-        if(confirm("Deseja apagar?")) database.ref('produtos/' + id).remove();
+        if(confirm("Deseja apagar este produto do catálogo?")) {
+            database.ref('produtos/' + id).remove();
+        }
     }
 </script>
+
 </body>
 </html>
