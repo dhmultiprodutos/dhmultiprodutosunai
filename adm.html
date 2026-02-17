@@ -11,9 +11,10 @@
         :root {
             --amarelo: #FFFF00;
             --preto: #000000;
+            --azul-edit: #2196F3;
         }
         body { font-family: 'Segoe UI', sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
-        .container { max-width: 700px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: none; } /* Escondido até acertar a senha */
+        .container { max-width: 700px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: none; }
         
         h2 { text-align: center; color: var(--preto); border-bottom: 3px solid var(--amarelo); padding-bottom: 10px; text-transform: uppercase; }
         
@@ -31,14 +32,25 @@
             cursor: pointer; text-transform: uppercase; margin-top: 10px;
         }
 
+        /* Estilo quando estiver em modo de edição */
+        button#btn-salvar.editando { background: var(--azul-edit); color: white; }
+
         .product-item { 
             background: #f9f9f9; padding: 15px; margin-bottom: 10px; border-radius: 10px; 
             display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--preto);
         }
 
+        .info-prod { cursor: pointer; flex: 1; }
+        .info-prod:hover { color: var(--azul-edit); }
+
         .btn-delete { 
             background: #ff4d4d; color: white; border: none; padding: 8px 15px; 
-            border-radius: 5px; cursor: pointer; font-weight: bold;
+            border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;
+        }
+        
+        .modo-aviso { 
+            display: none; background: #e3f2fd; color: #0d47a1; padding: 10px; 
+            border-radius: 8px; margin-bottom: 15px; font-weight: bold; text-align: center;
         }
     </style>
 </head>
@@ -46,8 +58,9 @@
 
 <div class="container" id="painel-conteudo">
     <h2>Painel Administrativo</h2>
-    <p style="text-align: center; color: #666; font-size: 0.9rem;">Gerencie o estoque e preços do catálogo</p>
     
+    <div id="aviso-edicao" class="modo-aviso">⚠️ MODO DE EDIÇÃO ATIVO</div>
+
     <div class="form-group">
         <label>Nome do Pod:</label>
         <input type="text" id="nome" placeholder="Ex: IGNITE V80">
@@ -64,7 +77,7 @@
     </div>
 
     <div class="form-group">
-        <label>Link da Imagem (Nome do arquivo no GitHub):</label>
+        <label>Link da Imagem (Arquivo no GitHub):</label>
         <input type="text" id="img" placeholder="Ex: v80.jpg">
     </div>
 
@@ -73,15 +86,16 @@
         <input type="text" id="sabores" placeholder="Ex: Menta, Uva, Melancia">
     </div>
 
-    <button id="btn-salvar" onclick="salvarProduto()">Publicar no Catálogo</button>
+    <input type="hidden" id="id-edicao"> <button id="btn-salvar" onclick="salvarProduto()">Publicar no Catálogo</button>
+    <button id="btn-cancelar" style="display:none; width:100%; margin-top:5px; padding:10px; background:#ccc; border:none; border-radius:8px; cursor:pointer;" onclick="cancelarEdicao()">Cancelar Edição</button>
 
     <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-    <div style="font-weight: 900; color: #666; margin-bottom: 15px;">PRODUTOS ATIVOS:</div>
+    <div style="font-weight: 900; color: #666; margin-bottom: 5px;">PRODUTOS ATIVOS:</div>
+    <p style="font-size: 0.8rem; color: #888; margin-bottom: 15px;">Dica: Clique no nome do produto para editar</p>
     <div id="lista-produtos-adm"></div>
 </div>
 
 <script>
-    // --- TRAVA DE SEGURANÇA ---
     const senhaCorreta = "DH00";
     const tentativa = prompt("Digite a senha de acesso ao Painel:");
 
@@ -89,10 +103,9 @@
         document.getElementById('painel-conteudo').style.display = 'block';
     } else {
         alert("Senha incorreta! Acesso negado.");
-        document.body.innerHTML = "<div style='text-align:center; margin-top:100px;'><h1>🚫 Acesso Restrito</h1><p>Você não tem permissão para acessar esta página.</p></div>";
+        document.body.innerHTML = "<div style='text-align:center; margin-top:100px;'><h1>🚫 Acesso Restrito</h1></div>";
     }
 
-    // --- CONFIGURAÇÃO FIREBASE ---
     const firebaseConfig = {
         apiKey: "AIzaSyA0JxoTvbSYkepGbaRS6B6w5_f4yECk_EE",
         authDomain: "dhmultimascas.firebaseapp.com",
@@ -107,6 +120,7 @@
     const database = firebase.database();
 
     function salvarProduto() {
+        const id = document.getElementById('id-edicao').value;
         const nome = document.getElementById('nome').value;
         const puffs = document.getElementById('puffs').value;
         const preco = document.getElementById('preco').value;
@@ -117,12 +131,54 @@
 
         const sabores = saboresRaw.split(',').map(s => s.trim()).filter(s => s !== "");
 
-        database.ref('produtos').push().set({
-            nome, puffs, preco, img, sabores
-        }).then(() => {
-            alert("✅ Produto adicionado com sucesso!");
-            document.querySelectorAll('input').forEach(i => i.value = "");
-        });
+        const dados = { nome, puffs, preco, img, sabores };
+
+        if (id) {
+            // ATUALIZA o produto existente
+            database.ref('produtos/' + id).set(dados).then(() => {
+                alert("✅ Produto atualizado!");
+                cancelarEdicao();
+            });
+        } else {
+            // CRIA um novo produto
+            database.ref('produtos').push().set(dados).then(() => {
+                alert("✅ Novo produto adicionado!");
+                limparCampos();
+            });
+        }
+    }
+
+    // Função para puxar os dados do produto para o formulário
+    function prepararEdicao(id, nome, puffs, preco, img, sabores) {
+        document.getElementById('id-edicao').value = id;
+        document.getElementById('nome').value = nome;
+        document.getElementById('puffs').value = puffs;
+        document.getElementById('preco').value = preco;
+        document.getElementById('img').value = img;
+        document.getElementById('sabores').value = sabores;
+
+        // Muda visual do botão e mostra aviso
+        const btn = document.getElementById('btn-salvar');
+        btn.innerText = "Salvar Alterações";
+        btn.classList.add('editando');
+        document.getElementById('aviso-edicao').style.display = 'block';
+        document.getElementById('btn-cancelar').style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function cancelarEdicao() {
+        limparCampos();
+        const btn = document.getElementById('btn-salvar');
+        btn.innerText = "Publicar no Catálogo";
+        btn.classList.remove('editando');
+        document.getElementById('id-edicao').value = "";
+        document.getElementById('aviso-edicao').style.display = 'none';
+        document.getElementById('btn-cancelar').style.display = 'none';
+    }
+
+    function limparCampos() {
+        document.querySelectorAll('input').forEach(i => i.value = "");
     }
 
     database.ref('produtos').on('value', (snapshot) => {
@@ -130,9 +186,14 @@
         lista.innerHTML = "";
         snapshot.forEach((item) => {
             const p = item.val();
+            const saboresString = p.sabores ? p.sabores.join(', ') : "";
+            
             lista.innerHTML += `
                 <div class="product-item">
-                    <div><strong>${p.nome}</strong> (${p.puffs}) - R$ ${p.preco}</div>
+                    <div class="info-prod" onclick="prepararEdicao('${item.key}', '${p.nome}', '${p.puffs}', '${p.preco}', '${p.img}', '${saboresString}')">
+                        <strong>${p.nome}</strong> (${p.puffs}) <br>
+                        <span style="font-size:0.8rem; color:#666;">Sabores: ${saboresString}</span>
+                    </div>
                     <button class="btn-delete" onclick="remover('${item.key}')">Excluir</button>
                 </div>`;
         });
